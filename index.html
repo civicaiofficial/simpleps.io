@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>サンプルサイト</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="container">
+    <h1>サンプルショップ</h1>
+    <nav>
+      <a href="./">ホーム</a>
+      <a href="simpleps-legal.html">特定商取引法に基づく表記</a>
+      <a href="simpleps-privacypolicy.html">プライバシーポリシー</a>
+      <a href="simpleps-userpolicy.html">プライバシーポリシー</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>ようこそ！</h2>
+      <p>ここに商品の紹介やサービス説明を入れてください。</p>
+    </section>
+  </main>
+
+  <footer class="container">
+    <small>&copy; <span id="year"></span> サンプルショップ</small>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
