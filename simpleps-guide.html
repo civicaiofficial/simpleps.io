@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>使い方 | パスワード管理帳</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <!-- このページ専用の軽量スタイル（既存CSSに影響を与えないよう最小限） -->
+  <style>
+    .steps{list-style:none; padding:0; margin:1.5rem 0; counter-reset: step;}
+    .step{counter-increment: step; border:1px solid #e5e5e5; border-radius:12px; padding:16px; margin:16px 0; background:#fff}
+    .step-header{display:flex; gap:12px; align-items:center; margin-bottom:12px;}
+    .step .badge{width:40px; height:40px; border-radius:50%; display:grid; place-items:center; font-weight:700; background:#2563eb; color:#fff}
+    .step .badge::before{content: counter(step);}
+    .step h3{margin:0; font-size:1.05rem}
+    .step .grid{display:grid; gap:12px}
+    .step figure{margin:0}
+    .step img{width:100%; height:auto; border-radius:10px; border:1px solid #e5e5e5}
+    .step figcaption{font-size:.9rem; color:#666; margin-top:6px}
+    @media (min-width: 720px){
+      .step .grid{grid-template-columns: 1.2fr 1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <h1>使い方 | パスワード管理帳</h1>
+    <nav>
+      <a href="index.html">ホーム</a>
+      <a href="legal-notice.html">特商法表記</a>
+      <a href="terms.html">利用規約</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="usage.html">使い方</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <p>インストールから自動入力、バックアップまでの使い方を、画像つきで順番に説明します。画像はダミーなので、実際のスクリーンショットに差し替えてください。</p>
+
+    <ol class="steps">
+
+      <!-- ① -->
+      <li class="step" id="step1">
+        <div class="step-header">
+          <div class="badge" aria-hidden="true"></div>
+          <h3>アプリをインストール</h3>
+        </div>
+        <div class="grid">
+          <figure>
+            <!-- 画像を差し替え：assets/img/step1.png など -->
+            <img src="assets/img/step1.png" alt="公式サイトのダウンロード画面（例）" />
+            <figcaption>公式サイトからOSに合ったインストーラを取得します。</figcaption>
+          </figure>
+          <div>
+            <p>公式サイトにアクセスし、Windows / macOS / iOS / Android のいずれかを選んでインストールします。配布元URLが正規かを確認してください。</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ② -->
+      <li class="step" id="step2">
+        <div class="step-header">
+          <div class="badge" aria-hidden="true"></div>
+          <h3>初期設定とマスターパスワード</h3>
+        </div>
+        <div class="grid">
+          <figure>
+            <img src="assets/img/step2.png" alt="初期セットアップ画面（例）" />
+            <figcaption>強力なマスターパスワードを設定します。</figcaption>
+          </figure>
+          <div>
+            <p>12文字以上で英大小・数字・記号を混在させた<strong>マスターパスワード</strong>を設定。これは金庫の鍵なので、他サービスとの使い回しは禁止です。</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ③ -->
+      <li class="step" id="step3">
+        <div class="step-header">
+          <div class="badge" aria-hidden="true"></div>
+          <h3>ブラウザ拡張を追加</h3>
+        </div>
+        <div class="grid">
+          <figure>
+            <img src="assets/img/step3.png" alt="ブラウザ拡張の追加画面（例）" />
+            <figcaption>Chrome / Edge / Firefox / Safari に対応。</figcaption>
+          </figure>
+          <div>
+            <p>拡張機能を追加し、アプリと同じアカウントでログイン。以後、ログインフォームに自動入力候補が表示されます。</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ④ -->
+      <li class="step" id="step4">
+        <div class="step-header">
+          <div class="badge" aria-hidden="true"></div>
+          <h3>ログイン情報を保存</h3>
+        </div>
+        <div class="grid">
+          <figure>
+            <img src="assets/img/step4.png" alt="ログイン保存のポップアップ（例）" />
+            <figcaption>初回ログイン時に「保存しますか？」が表示されます。</figcaption>
+          </figure>
+          <div>
+            <p>サイトでログインすると保存ダイアログが出ます。手動追加する場合は「新規アイテム」からサイト名・URL・ユーザー名・パスワードを登録してください。</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ⑤ -->
+      <li class="step" id="step5">
+        <div class="step-header">
+          <div class="badge" aria-hidden="true"></div>
+          <h3>自動入力とパスワード生成</h3>
+        </div>
+        <div class="grid">
+          <figure>
+            <img src="assets/img/step5.png" alt="自動入力候補が表示されている画面（例）" />
+            <figcaption>候補を選ぶだけで入力完了。</figcaption>
+          </figure>
+          <div>
+            <p>ログイン欄をクリック→候補を選択で自動入力。新規登録では「強力なパスワードを生成」を使い、そのまま保存すれば安全に使い回しを防げます。</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ⑥ -->
+      <li class="step" id="step6">
+        <div class="step-header">
+          <div class="badge" aria-hidden="true"></div>
+          <h3>二要素認証（2FA）の活用</h3>
+        </div>
+        <div class="grid">
+          <figure>
+            <img src="assets/img/step6.png" alt="2FA設定（QR読み取り）の画面（例）" />
+            <figcaption>QRコードを読み取り、6桁コードを保管。</figcaption>
+          </figure>
+          <div>
+            <p>対応アプリならログイン情報に2FAトークンを紐づけ可能。サイトの2FA設定で表示されたQRコードを読み取り、以後は拡張からワンタイムコードを自動入力できます。</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- ⑦ -->
+      <li class="step" id="step7">
+        <div class="step-header">
+          <div class="badge" aria-hidden="true"></div>
+          <h3>バックアップと復旧</h3>
+        </div>
+        <div class="grid">
+          <figure>
+            <img src="assets/img/step7.png" alt="バックアップ/エクスポート画面（例）" />
+            <figcaption>復旧用情報は安全な場所に保管。</figcaption>
+          </figure>
+          <div>
+            <p>必要時のみエクスポートを行い、復旧キーや緊急キットはオフラインで安全に保管。端末紛失時は新端末でサインインし、同期から復元します。</p>
+          </div>
+        </div>
+      </li>
+
+    </ol>
+
+    <p style="margin-top:1.5rem">※ 画像パスは <code>assets/img/stepX.png</code> をお好みのスクリーンショットに置き換えてください。</p>
+  </main>
+
+  <footer class="container">
+    <nav>
+      <a href="index.html">ホーム</a> |
+      <a href="legal-notice.html">特商法表記</a> |
+      <a href="privacy.html">プライバシーポリシー</a> |
+      <a href="terms.html">利用規約</a> |
+      <a href="usage.html">使い方</a>
+    </nav>
+    <small>&copy; <span id="year"></span> CivicAI</small>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
