@@ -1,44 +1,87 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>パスワード</title>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>パスワード管理帳 SimplePS</title>
+  <meta name="description" content="高齢の方やお子さまも含め、誰でも簡単に使えるパスワード管理アプリ「パスワード管理帳 SimplePS」の公式サイトです。" />
+  <link rel="stylesheet" href="site.css" />
 </head>
 <body>
-  <header class="container">
-    <h1>CivicAI</h1>
+
+<header>
+  <div class="header-inner">
+    <a class="site-title" href="index.html">
+      <span class="icon">🔐</span>
+      パスワード管理帳 SimplePS
+    </a>
     <nav>
-      <a href="index.html">ホーム</a> |
-      <a href="simpleps-legal.html">特商法表記</a> |
-      <a href="simpleps-privacypolicy.html">プライバシーポリシー</a> |
-      <a href="simpleps-userpolicy.html">利用規約</a> |
+      <a href="index.html" class="active">ホーム</a>
       <a href="simpleps-guide.html">使い方</a>
+      <a href="simpleps-userpolicy.html">利用規約</a>
+      <a href="simpleps-privacypolicy.html">プライバシーポリシー</a>
+      <a href="simpleps-legal.html">特商法表記</a>
     </nav>
-  </header>
+  </div>
+</header>
 
-  <main class="container">
-    <section>
-      
-     <h2>ようこそ！</h2>
-      <p>
-        「パスワード管理帳」は、高度なセキュリティと利便性を保ちながら、
-        不必要な機能や広告を排除することで、幅広い世代の方に安心してご利用いただけるように設計しました。
-      </p>
-      <p>
-        月額料金も大変安く設定しておりますので、家計の負担を心配する必要はありません。
-        また、皆さまのフィードバックをもとに継続的に改善を行い、利便性と堅牢性をさらに高めております。
-        サポートも充実しておりますので、安心してお使いいただけます。
-      </p>
-    </section>
-  </main>
+<div class="hero">
+  <h1>🔐 パスワード管理帳 SimplePS</h1>
+  <p>誰でも簡単に、安心して使えるパスワード管理アプリです。</p>
+  <a class="hero-btn" href="simpleps-guide.html">📖 使い方を見る</a>
+</div>
 
-  <footer class="container">
-    <small>&copy; <span id="year"></span> CivicAI</small>
-  </footer>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+<main>
+  <section class="section">
+    <h2>ようこそ！</h2>
+    <p>
+      「パスワード管理帳」は、高度なセキュリティと利便性を保ちながら、
+      不必要な機能や広告を排除することで、幅広い世代の方に安心してご利用いただけるように設計しました。
+    </p>
+    <p>
+      月額料金も大変安く設定しておりますので、家計の負担を心配する必要はありません。
+      また、皆さまのフィードバックをもとに継続的に改善を行い、利便性と堅牢性をさらに高めております。
+      サポートも充実しておりますので、安心してお使いいただけます。
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>ご案内</h2>
+    <div class="card-grid">
+      <a class="card" href="simpleps-guide.html">
+        <div class="card-icon">📖</div>
+        <h3>使い方</h3>
+        <p>実際の画面を見ながら、使い方を順番に説明します。</p>
+      </a>
+      <a class="card" href="simpleps-userpolicy.html">
+        <div class="card-icon">📄</div>
+        <h3>利用規約</h3>
+        <p>アプリをご利用いただくうえでのお約束です。</p>
+      </a>
+      <a class="card" href="simpleps-privacypolicy.html">
+        <div class="card-icon">🔏</div>
+        <h3>プライバシーポリシー</h3>
+        <p>お預かりする情報の取り扱いについて。</p>
+      </a>
+      <a class="card" href="simpleps-legal.html">
+        <div class="card-icon">⚖️</div>
+        <h3>特定商取引法に基づく表記</h3>
+        <p>販売事業者やお支払いについての表記です。</p>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <nav>
+      <a href="index.html">ホーム</a>
+      <a href="simpleps-guide.html">使い方</a>
+      <a href="simpleps-userpolicy.html">利用規約</a>
+      <a href="simpleps-privacypolicy.html">プライバシーポリシー</a>
+      <a href="simpleps-legal.html">特商法表記</a>
+  </nav>
+  <p>&copy; 2026 パスワード管理帳 SimplePS（CivicAI）</p>
+</footer>
+
 </body>
 </html>

@@ -1,17 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>特定商取引法に基づく表記</title>
-  <!-- styles.css はそのまま読み込む想定 -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>特定商取引法に基づく表記 | パスワード管理帳 SimplePS</title>
+  <meta name="description" content="パスワード管理帳 SimplePS の特定商取引法に基づく表記です。" />
+  <link rel="stylesheet" href="site.css" />
 </head>
 <body>
 
-  <main class="container">
-    <h1>特定商取引法に基づく表記</h1>
+<header>
+  <div class="header-inner">
+    <a class="site-title" href="index.html">
+      <span class="icon">🔐</span>
+      パスワード管理帳 SimplePS
+    </a>
+    <nav>
+      <a href="index.html">ホーム</a>
+      <a href="simpleps-guide.html">使い方</a>
+      <a href="simpleps-userpolicy.html">利用規約</a>
+      <a href="simpleps-privacypolicy.html">プライバシーポリシー</a>
+      <a href="simpleps-legal.html" class="active">特商法表記</a>
+    </nav>
+  </div>
+</header>
 
-    <dl>
+<div class="hero">
+  <h1>⚖️ 特定商取引法に基づく表記</h1>
+  <p>パスワード管理帳 SimplePS の販売に関する表記です。</p>
+</div>
+
+<main>
+  <section class="section">
+    <dl class="info-list">
       <dt>サービス名</dt>
       <dd>パスワード管理帳</dd>
 
@@ -31,7 +52,7 @@
       <dd>
         下記のお問い合わせフォームよりご連絡ください。<br>
         お問い合わせフォーム：
-        <a href="https://forms.gle/87jTx31cnXoTPKRf6" target="_blank">こちら</a>
+        <a href="https://forms.gle/87jTx31cnXoTPKRf6" target="_blank" rel="noopener">こちら</a>
       </dd>
 
       <dt>販売価格</dt>
@@ -54,22 +75,19 @@
         なお、お客様の端末環境・設定・使用方法に起因する不具合については対応いたしかねます。
       </dd>
     </dl>
-  </main>
+  </section>
+</main>
 
-  <footer class="container">
-    <nav>
-      <a href="index.html">ホーム</a> |
-      <a href="simpleps-legal.html">特商法表記</a> |
-      <a href="simpleps-privacypolicy.html">プライバシーポリシー</a> |
-      <a href="simpleps-userpolicy.html">利用規約</a> |
+<footer>
+  <nav>
+      <a href="index.html">ホーム</a>
       <a href="simpleps-guide.html">使い方</a>
-    </nav>
-    <small>&copy; <span id="year"></span> CivicAI</small>
-  </footer>
+      <a href="simpleps-userpolicy.html">利用規約</a>
+      <a href="simpleps-privacypolicy.html">プライバシーポリシー</a>
+      <a href="simpleps-legal.html">特商法表記</a>
+  </nav>
+  <p>&copy; 2026 パスワード管理帳 SimplePS（CivicAI）</p>
+</footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
-
