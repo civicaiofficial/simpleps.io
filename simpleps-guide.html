@@ -1,182 +1,1187 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>使い方 | パスワード管理帳</title>
-  <link rel="stylesheet" href="assets/styles.css" />
-  <!-- このページ専用の軽量スタイル（既存CSSに影響を与えないよう最小限） -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>使い方 | パスワード管理帳 SimplePS</title>
+  <meta name="description" content="パスワード管理帳 SimplePS の使い方。はじめての設定から、パスワード・ToDo・メモの使い方まで、実際の画面で説明します。" />
   <style>
-    .steps{list-style:none; padding:0; margin:1.5rem 0; counter-reset: step;}
-    .step{counter-increment: step; border:1px solid #e5e5e5; border-radius:12px; padding:16px; margin:16px 0; background:#fff}
-    .step-header{display:flex; gap:12px; align-items:center; margin-bottom:12px;}
-    .step .badge{width:40px; height:40px; border-radius:50%; display:grid; place-items:center; font-weight:700; background:#2563eb; color:#fff}
-    .step .badge::before{content: counter(step);}
-    .step h3{margin:0; font-size:1.05rem}
-    .step .grid{display:grid; gap:12px}
-    .step figure{margin:0}
-    .step img{width:100%; height:auto; border-radius:10px; border:1px solid #e5e5e5}
-    .step figcaption{font-size:.9rem; color:#666; margin-top:6px}
-    @media (min-width: 720px){
-      .step .grid{grid-template-columns: 1.2fr 1fr}
+    /* ============================================================
+       リセット・基本
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:    #5C6BC0;
+      --primary-dk: #3949AB;
+      --accent:     #FFB300;
+      --tap:        #E53935;
+      --bg:         #F5F6FA;
+      --surface:    #FFFFFF;
+      --text:       #212121;
+      --text-sub:   #555555;
+      --border:     #E0E0E0;
+      --radius:     12px;
+      --shadow:     0 2px 12px rgba(0,0,0,.08);
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    a { color: var(--primary-dk); }
+    img { max-width: 100%; display: block; }
+
+    /* ============================================================
+       ヘッダー・ナビ
+    ============================================================ */
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 0 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 56px;
+      gap: 12px;
+    }
+    .site-title {
+      font-size: 17px;
+      font-weight: 700;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .site-title .icon { font-size: 22px; }
+
+    nav { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+    nav a {
+      color: rgba(255,255,255,.9);
+      font-size: 14px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background .15s;
+    }
+    nav a:hover, nav a.active {
+      background: rgba(255,255,255,.2);
+      color: #fff;
+    }
+
+    /* ============================================================
+       ヒーロー
+    ============================================================ */
+    .hero {
+      background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 44px 20px 40px;
+    }
+    .hero h1 { font-size: clamp(24px, 5vw, 32px); font-weight: 700; margin-bottom: 10px; }
+    .hero p  { font-size: 17px; opacity: .92; max-width: 560px; margin: 0 auto; }
+
+    /* ============================================================
+       メインレイアウト
+    ============================================================ */
+    main {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 32px 16px 64px;
+    }
+
+    /* ============================================================
+       目次
+    ============================================================ */
+    .toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+    }
+    .toc h2 {
+      font-size: 15px;
+      letter-spacing: .08em;
+      color: var(--text-sub);
+      margin-bottom: 10px;
+    }
+    .toc ol {
+      padding-left: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 6px 24px;
+    }
+    .toc li { font-size: 16px; }
+
+    /* ============================================================
+       読み方の説明
+    ============================================================ */
+    .howto {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #FFF;
+      border: 2px solid #FFCDD2;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 32px;
+      font-size: 16px;
+    }
+    .howto .legend {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 4px solid var(--tap);
+      background: rgba(229,57,53,.12);
+    }
+
+    /* ============================================================
+       セクション共通
+    ============================================================ */
+    .section {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 28px 32px;
+      margin-bottom: 28px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--primary);
+    }
+    .section-header .num {
+      background: var(--primary);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-header h2 { font-size: 21px; font-weight: 700; line-height: 1.4; }
+    .section h3 { font-size: 18px; margin: 28px 0 12px; }
+    .section h3:first-of-type { margin-top: 8px; }
+    .lead { margin-bottom: 16px; }
+
+    /* ============================================================
+       ステップ
+    ============================================================ */
+    .steps { list-style: none; counter-reset: step; }
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .steps li::before {
+      content: counter(step);
+      background: var(--primary);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      min-width: 30px; height: 30px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .steps li strong { font-size: 17px; }
+    .steps li p { margin-top: 4px; font-size: 16px; color: var(--text-sub); }
+
+    /* ============================================================
+       スクリーンショット
+    ============================================================ */
+    .shots {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 24px 0 8px;
+    }
+    .shot {
+      width: 230px;
+      max-width: 100%;
+      text-align: center;
+    }
+    .shot .frame {
+      background: #1F1F1F;
+      padding: 8px;
+      border-radius: 26px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.18);
+    }
+    .shot .screen {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #FDF7FF;
+    }
+    .shot.dialog .frame { background: transparent; padding: 0; box-shadow: none; }
+    .shot.dialog .screen { border-radius: 22px; box-shadow: 0 4px 16px rgba(0,0,0,.18); }
+    .shot img { width: 100%; height: auto; }
+    .shot figcaption {
+      margin-top: 10px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text-sub);
+    }
+    .shot figcaption b { color: var(--text); display: block; font-size: 16px; }
+
+    /* タップする場所の赤丸 */
+    .tap {
+      position: absolute;
+      width: 20%;
+      aspect-ratio: 1 / 1;
+      border: 3px solid var(--tap);
+      background: rgba(229,57,53,.14);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .tap.sm { width: 14%; }
+    .tap.wide { width: 86%; aspect-ratio: auto; height: 7%; border-radius: 999px; }
+
+    /* ============================================================
+       ポイントボックス
+    ============================================================ */
+    .point-box, .warn-box {
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 18px 0;
+      font-size: 16px;
+    }
+    .point-box { background: #EDE7F6; border-left: 5px solid var(--primary); }
+    .point-box strong { color: var(--primary-dk); }
+    .warn-box { background: #FFF8E1; border-left: 5px solid var(--accent); }
+    .warn-box strong { color: #B34700; }
+
+    /* ============================================================
+       カード一覧
+    ============================================================ */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .card .card-icon { font-size: 26px; margin-bottom: 6px; }
+    .card h3 { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
+    .card p  { font-size: 15px; color: var(--text-sub); }
+
+    /* ============================================================
+       表
+    ============================================================ */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    thead th { background: var(--bg); border-bottom: 2px solid var(--border); }
+    td:first-child { white-space: nowrap; font-weight: 600; }
+
+    /* ============================================================
+       プレミアム
+    ============================================================ */
+    .badge-premium {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--accent);
+      color: #212121;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+    .price-box {
+      background: linear-gradient(135deg, #EDE7F6, #E8EAF6);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .price-box .big { font-size: 20px; font-weight: 700; color: var(--primary-dk); margin-bottom: 4px; }
+    .notes { margin-top: 20px; font-size: 15px; color: var(--text-sub); padding-left: 1.2em; }
+    .notes li { margin-bottom: 4px; }
+
+    /* ============================================================
+       フッター
+    ============================================================ */
+    footer {
+      background: #37474F;
+      color: rgba(255,255,255,.8);
+      text-align: center;
+      padding: 28px 16px;
+      font-size: 14px;
+    }
+    footer nav { justify-content: center; gap: 8px; margin-bottom: 10px; }
+    footer nav a { color: rgba(255,255,255,.8); font-size: 14px; padding: 4px 8px; }
+    footer nav a:hover { color: #fff; }
+
+    /* ============================================================
+       レスポンシブ
+    ============================================================ */
+    @media (max-width: 600px) {
+      html { scroll-padding-top: 0; }
+      header { position: static; }
+      .header-inner { padding: 10px 0; flex-direction: column; align-items: flex-start; }
+      nav { justify-content: flex-start; }
+      .section { padding: 22px 16px 26px; }
+      .shots { gap: 16px; }
+      .shot { width: calc(50% - 8px); }
+      .shot.single { width: 72%; }
+      .card-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <header class="container">
-    <h1>使い方 | パスワード管理帳</h1>
-    <nav>
-      <a href="index.html">ホーム</a> |
-      <a href="simpleps-legal.html">特商法表記</a> |
-      <a href="simpleps-privacypolicy.html">プライバシーポリシー</a> |
-      <a href="simpleps-userpolicy.html">利用規約</a> |
-      <a href="simpleps-guide.html">使い方</a>
-    </nav>
-  </header>
 
-  <main class="container">
-    <p>インストールから自動入力、バックアップまでの使い方を、画像つきで順番に説明します。画像はダミーなので、実際のスクリーンショットに差し替えてください。</p>
-
-    <ol class="steps">
-
-      <!-- ① -->
-      <li class="step" id="step1">
-        <div class="step-header">
-          <div class="badge" aria-hidden="true"></div>
-          <h3>アプリをインストール</h3>
-        </div>
-        <div class="grid">
-          <figure>
-            <!-- 画像を差し替え：assets/img/step1.png など -->
-            <img src="assets/img/step1.png" alt="公式サイトのダウンロード画面（例）" />
-            <figcaption>公式サイトからOSに合ったインストーラを取得します。</figcaption>
-          </figure>
-          <div>
-            <p>公式サイトにアクセスし、Windows / macOS / iOS / Android のいずれかを選んでインストールします。配布元URLが正規かを確認してください。</p>
-          </div>
-        </div>
-      </li>
-
-      <!-- ② -->
-      <li class="step" id="step2">
-        <div class="step-header">
-          <div class="badge" aria-hidden="true"></div>
-          <h3>初期設定とマスターパスワード</h3>
-        </div>
-        <div class="grid">
-          <figure>
-            <img src="assets/img/step2.png" alt="初期セットアップ画面（例）" />
-            <figcaption>強力なマスターパスワードを設定します。</figcaption>
-          </figure>
-          <div>
-            <p>12文字以上で英大小・数字・記号を混在させた<strong>マスターパスワード</strong>を設定。これは金庫の鍵なので、他サービスとの使い回しは禁止です。</p>
-          </div>
-        </div>
-      </li>
-
-      <!-- ③ -->
-      <li class="step" id="step3">
-        <div class="step-header">
-          <div class="badge" aria-hidden="true"></div>
-          <h3>ブラウザ拡張を追加</h3>
-        </div>
-        <div class="grid">
-          <figure>
-            <img src="assets/img/step3.png" alt="ブラウザ拡張の追加画面（例）" />
-            <figcaption>Chrome / Edge / Firefox / Safari に対応。</figcaption>
-          </figure>
-          <div>
-            <p>拡張機能を追加し、アプリと同じアカウントでログイン。以後、ログインフォームに自動入力候補が表示されます。</p>
-          </div>
-        </div>
-      </li>
-
-      <!-- ④ -->
-      <li class="step" id="step4">
-        <div class="step-header">
-          <div class="badge" aria-hidden="true"></div>
-          <h3>ログイン情報を保存</h3>
-        </div>
-        <div class="grid">
-          <figure>
-            <img src="assets/img/step4.png" alt="ログイン保存のポップアップ（例）" />
-            <figcaption>初回ログイン時に「保存しますか？」が表示されます。</figcaption>
-          </figure>
-          <div>
-            <p>サイトでログインすると保存ダイアログが出ます。手動追加する場合は「新規アイテム」からサイト名・URL・ユーザー名・パスワードを登録してください。</p>
-          </div>
-        </div>
-      </li>
-
-      <!-- ⑤ -->
-      <li class="step" id="step5">
-        <div class="step-header">
-          <div class="badge" aria-hidden="true"></div>
-          <h3>自動入力とパスワード生成</h3>
-        </div>
-        <div class="grid">
-          <figure>
-            <img src="assets/img/step5.png" alt="自動入力候補が表示されている画面（例）" />
-            <figcaption>候補を選ぶだけで入力完了。</figcaption>
-          </figure>
-          <div>
-            <p>ログイン欄をクリック→候補を選択で自動入力。新規登録では「強力なパスワードを生成」を使い、そのまま保存すれば安全に使い回しを防げます。</p>
-          </div>
-        </div>
-      </li>
-
-      <!-- ⑥ -->
-      <li class="step" id="step6">
-        <div class="step-header">
-          <div class="badge" aria-hidden="true"></div>
-          <h3>二要素認証（2FA）の活用</h3>
-        </div>
-        <div class="grid">
-          <figure>
-            <img src="assets/img/step6.png" alt="2FA設定（QR読み取り）の画面（例）" />
-            <figcaption>QRコードを読み取り、6桁コードを保管。</figcaption>
-          </figure>
-          <div>
-            <p>対応アプリならログイン情報に2FAトークンを紐づけ可能。サイトの2FA設定で表示されたQRコードを読み取り、以後は拡張からワンタイムコードを自動入力できます。</p>
-          </div>
-        </div>
-      </li>
-
-      <!-- ⑦ -->
-      <li class="step" id="step7">
-        <div class="step-header">
-          <div class="badge" aria-hidden="true"></div>
-          <h3>バックアップと復旧</h3>
-        </div>
-        <div class="grid">
-          <figure>
-            <img src="assets/img/step7.png" alt="バックアップ/エクスポート画面（例）" />
-            <figcaption>復旧用情報は安全な場所に保管。</figcaption>
-          </figure>
-          <div>
-            <p>必要時のみエクスポートを行い、復旧キーや緊急キットはオフラインで安全に保管。端末紛失時は新端末でサインインし、同期から復元します。</p>
-          </div>
-        </div>
-      </li>
-
-    </ol>
-
-    <p style="margin-top:1.5rem">※ 画像パスは <code>assets/img/stepX.png</code> をお好みのスクリーンショットに置き換えてください。</p>
-  </main>
-
-  <footer class="container">
+<!-- ============================================================
+     ヘッダー
+============================================================ -->
+<header>
+  <div class="header-inner">
+    <div class="site-title">
+      <span class="icon">🔐</span>
+      パスワード管理帳 SimplePS
+    </div>
     <nav>
       <a href="index.html">ホーム</a>
-      <a href="simpleps-legal.html">特商法表記</a> |
-      <a href="simpleps-privacypolicy.html">プライバシーポリシー</a> |
-      <a href="simpleps-userpolicy.html">利用規約</a> |
-      <a href="simpleps-guide.html">使い方</a>
+      <a href="simpleps-guide.html" class="active">使い方</a>
+      <a href="simpleps-userpolicy.html">利用規約</a>
+      <a href="simpleps-privacypolicy.html">プライバシーポリシー</a>
+      <a href="simpleps-legal.html">特商法表記</a>
     </nav>
-    <small>&copy; <span id="year"></span> CivicAI</small>
-  </footer>
+  </div>
+</header>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+<div class="hero">
+  <h1>📖 使い方ガイド</h1>
+  <p>はじめての設定から、パスワード・ToDo・メモの使い方まで、実際の画面を見ながら説明します。</p>
+</div>
+
+<main>
+
+  <!-- 目次 -->
+  <div class="toc">
+    <h2>もくじ</h2>
+    <ol>
+      <li><a href="#sec-setup">はじめての設定</a></li>
+      <li><a href="#sec-screens">画面の見かた</a></li>
+      <li><a href="#sec-unlock">アプリを開く（ロック解除）</a></li>
+      <li><a href="#sec-add">パスワードを登録する</a></li>
+      <li><a href="#sec-view">パスワードを見る・コピーする</a></li>
+      <li><a href="#sec-search">さがす（検索）</a></li>
+      <li><a href="#sec-generator">安全なパスワードを作る</a></li>
+      <li><a href="#sec-edit">直す・消す</a></li>
+      <li><a href="#sec-todo">ToDo（やること）</a></li>
+      <li><a href="#sec-memo">メモ</a></li>
+      <li><a href="#sec-security">安全のしくみ</a></li>
+      <li><a href="#sec-settings">設定</a></li>
+      <li><a href="#sec-csv">CSVで保存・復元</a></li>
+      <li><a href="#sec-premium">プレミアムプラン</a></li>
+    </ol>
+  </div>
+
+  <div class="howto">
+    <span class="legend" aria-hidden="true"></span>
+    <p>画面の中の<strong style="color:var(--tap)">赤い丸</strong>は、指で軽く触れる（タップする）場所です。</p>
+  </div>
+
+  <!-- ============================================================
+       1. はじめての設定
+  ============================================================ -->
+  <section class="section" id="sec-setup">
+    <div class="section-header">
+      <div class="num">1</div>
+      <h2>はじめての設定</h2>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>使う言語をえらぶ</strong>
+          <p>アプリを初めて開くと、言語をえらぶ画面が出ます。「日本語」をえらんで、下の「Start with this language」をタップします。言語は、あとから設定画面で変えられます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>利用規約とプライバシーポリシーに同意する</strong>
+          <p>青い文字をタップすると内容を読めます。読み終えたら右の2つの四角にチェックを入れて、「同意して利用を開始する」をタップします。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>6けたのPINコード（暗証番号）を決める</strong>
+          <p>アプリを開くときに使う数字を6つ入力して「次へ」をタップします。確認のため、もう一度同じ数字を入力して「設定する」をタップします。目のマークをタップすると、入力した数字を確かめられます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>準備完了です</strong>
+          <p>パスワードの一覧画面が出ます。最初は何も登録されていません。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="shots">
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/01-language.webp" width="540" height="1200" loading="lazy" alt="言語をえらぶ画面。日本語をえらび、下のボタンを押す">
+          <span class="tap wide" style="left:50%;top:91.3%"></span>
+        </div></div>
+        <figcaption><b>① 言語をえらぶ</b>下のボタンをタップ</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/02-terms.webp" width="540" height="1200" loading="lazy" alt="利用規約とプライバシーポリシーの同意画面。2つのチェックボックスにチェックを入れる">
+          <span class="tap sm" style="left:83%;top:74.7%"></span>
+          <span class="tap sm" style="left:83%;top:82.1%"></span>
+          <span class="tap wide" style="left:50%;top:92.3%"></span>
+        </div></div>
+        <figcaption><b>② 同意する</b>2か所にチェックして、下のボタン</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/03-pin-setup.webp" width="540" height="1200" loading="lazy" alt="PINコードを決める画面。数字のボタンで6けたを入力する">
+        </div></div>
+        <figcaption><b>③ PINコードを決める</b>数字を6つ入力（2回）</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/04-home-empty.webp" width="540" height="1200" loading="lazy" alt="設定が終わったあとのパスワード一覧画面。まだ何も登録されていない">
+        </div></div>
+        <figcaption><b>④ 準備完了</b>パスワードの一覧画面</figcaption>
+      </figure>
+    </div>
+
+    <div class="warn-box">
+      <strong>⚠️ PINコードは忘れないでください</strong><br>
+      PINコードを忘れると、アプリの中のデータを見られなくなります。紙に書いて家族と共有するなど、忘れない工夫をしてください。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       2. 画面の見かた
+  ============================================================ -->
+  <section class="section" id="sec-screens">
+    <div class="section-header">
+      <div class="num">2</div>
+      <h2>画面の見かた</h2>
+    </div>
+
+    <p class="lead">画面のいちばん下に、3つのボタンがあります。タップすると画面が切り替わります。</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <h3>パスワード</h3>
+        <p>サービスごとのID（ユーザー名）とパスワードを保管します。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">☑️</div>
+        <h3>To Do</h3>
+        <p>やることを書いておく場所です。期限の日時に通知でお知らせできます。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📝</div>
+        <h3>メモ</h3>
+        <p>自由に書けるメモ帳です。ラベルで分類できます。</p>
+      </div>
+    </div>
+
+    <p style="margin-top:18px;">画面右上の <strong>⚙️ 歯車</strong> は設定、<strong>🔒 カギ</strong> はすぐにロックするボタンです。</p>
+
+    <div class="point-box">
+      <strong>📢 広告について</strong><br>
+      無料でお使いの場合、画面の下に広告が表示されます。<a href="#sec-premium">プレミアムプラン</a>では広告が消えます。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       3. ロック解除
+  ============================================================ -->
+  <section class="section" id="sec-unlock">
+    <div class="section-header">
+      <div class="num">3</div>
+      <h2>アプリを開く（ロック解除）</h2>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>PINコードを入力する</strong>
+          <p>アプリを開くと「ロック解除」の画面が出ます。決めておいた6けたの数字を入力すると、自動で開きます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>指紋や顔でも開けます</strong>
+          <p>スマホに指紋や顔が登録されていれば、左下の指紋マークからPINコードを使わずに開けます。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="shots">
+      <figure class="shot single">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/05-lock.webp" width="540" height="1200" loading="lazy" alt="ロック解除画面。数字のボタンでPINコードを入力する。左下に指紋マーク">
+          <span class="tap sm" style="left:18.9%;top:62.1%"></span>
+        </div></div>
+        <figcaption><b>ロック解除の画面</b>左下は指紋・顔で開くボタン</figcaption>
+      </figure>
+    </div>
+
+    <div class="point-box">
+      <strong>⏱️ 自動でカギがかかります</strong><br>
+      ほかのアプリに切り替えて60秒たつと、自動でロックされます。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4. パスワードの登録
+  ============================================================ -->
+  <section class="section" id="sec-add">
+    <div class="section-header">
+      <div class="num">4</div>
+      <h2>パスワードを登録する</h2>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>右下の「＋ 新しく登録」をタップ</strong>
+          <p>登録の画面が開きます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>「URL名」に、どのサービスか分かる名前を入れる</strong>
+          <p>例：「Google」「Amazon」「○○銀行」など。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>「ID / ユーザー名」を入れる</strong>
+          <p>ログインに使うIDやメールアドレス、電話番号などです。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>「パスワード」を入れる</strong>
+          <p>目のマークで、入力した文字を見る／かくすを切り替えられます。まだ決めていないときは、となりの丸い矢印のマークで<a href="#sec-generator">自動で作れます</a>。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>「メモ（任意）」は、書いても書かなくてもかまいません</strong>
+          <p>合言葉や、ログインのときの注意などを書いておけます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>「保存する」をタップ</strong>
+          <p>一覧に追加されます。一覧は名前の順に並びます。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="shots">
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/04-home-empty.webp" width="540" height="1200" loading="lazy" alt="パスワード一覧画面。右下の新しく登録ボタン">
+          <span class="tap" style="left:79.7%;top:84.1%;width:34%;aspect-ratio:auto;height:7.5%;border-radius:999px"></span>
+        </div></div>
+        <figcaption><b>① 新しく登録</b>右下のボタンをタップ</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/07-add.webp" width="540" height="1200" loading="lazy" alt="パスワード登録画面。URL名、ID、パスワード、メモを入力して保存する">
+          <span class="tap wide" style="left:50%;top:53.6%"></span>
+        </div></div>
+        <figcaption><b>② 入力して保存</b>4つの欄に入力して「保存する」</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/06-home-list.webp" width="540" height="1200" loading="lazy" alt="パスワードが登録された一覧画面">
+        </div></div>
+        <figcaption><b>③ 一覧に追加</b>登録した内容が並びます</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       5. 確認・コピー
+  ============================================================ -->
+  <section class="section" id="sec-view">
+    <div class="section-header">
+      <div class="num">5</div>
+      <h2>パスワードを見る・コピーする</h2>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>一覧で、見たいサービスをタップ</strong>
+          <p>くわしい画面が開きます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>目のマークでパスワードを表示</strong>
+          <p>はじめは「●●●」でかくれています。目のマークをタップすると文字が見えます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>四角が重なったマークでコピー</strong>
+          <p>ID・パスワード・メモのとなりにあるマークをタップするとコピーされます。ログインする画面で「貼り付け」をすれば入力できます。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="shots">
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/08-detail.webp" width="540" height="1200" loading="lazy" alt="パスワードのくわしい画面。パスワードは●でかくれている。目のマークとコピーのマーク">
+          <span class="tap sm" style="left:76.4%;top:30.9%"></span>
+          <span class="tap sm" style="left:88.4%;top:30.9%"></span>
+        </div></div>
+        <figcaption><b>くわしい画面</b>左が目のマーク、右がコピー</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/09-detail-show.webp" width="540" height="1200" loading="lazy" alt="目のマークをタップしてパスワードが表示された画面">
+        </div></div>
+        <figcaption><b>パスワードを表示</b>もう一度タップでかくれます</figcaption>
+      </figure>
+    </div>
+
+    <div class="point-box">
+      <strong>🔒 コピーした内容は30秒で消えます</strong><br>
+      ほかの人に見られないよう、コピーしたパスワードは30秒後に自動で消えます。間に合わなかったときは、もう一度コピーしてください。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       6. 検索
+  ============================================================ -->
+  <section class="section" id="sec-search">
+    <div class="section-header">
+      <div class="num">6</div>
+      <h2>さがす（検索）</h2>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>一覧の上の「URL名、ID、メモでさがす」をタップ</strong>
+          <p>文字を入力できるようになります。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>さがしたい言葉を入れる</strong>
+          <p>入力した言葉をふくむものだけが、すぐに表示されます。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="point-box">
+      <strong>💡 さがせる内容</strong><br>
+      URL名（サービス名）・ID・メモの3つからさがします。パスワードそのものではさがせません。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       7. パスワード生成
+  ============================================================ -->
+  <section class="section" id="sec-generator">
+    <div class="section-header">
+      <div class="num">7</div>
+      <h2>安全なパスワードを作る</h2>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>登録や編集の画面で、パスワード欄の右にある丸い矢印のマークをタップ</strong>
+          <p>1回タップするだけで、16文字の安全なパスワードが自動で入ります。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>そのまま「保存する」をタップ</strong>
+          <p>作り直したいときは、もう一度マークをタップします。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="shots">
+      <figure class="shot single">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/10-generate.webp" width="540" height="1200" loading="lazy" alt="パスワード欄の右にある丸い矢印のマークをタップすると、新しいパスワードが入る">
+          <span class="tap sm" style="left:88.4%;top:31.9%"></span>
+        </div></div>
+        <figcaption><b>パスワードを自動で作る</b>丸い矢印のマークをタップ</figcaption>
+      </figure>
+    </div>
+
+    <div class="point-box">
+      <strong>🎲 作られるパスワード</strong><br>
+      英語の大文字・小文字・数字・記号をまぜた16文字です。ほかの人に当てられにくく、安全です。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       8. 編集・削除
+  ============================================================ -->
+  <section class="section" id="sec-edit">
+    <div class="section-header">
+      <div class="num">8</div>
+      <h2>直す・消す</h2>
+    </div>
+
+    <h3>✏️ 直す</h3>
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>くわしい画面で、右上のえんぴつのマークをタップ</strong>
+          <p>「編集」の画面が開きます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>直したいところを書きかえて「保存する」をタップ</strong>
+        </div>
+      </li>
+    </ol>
+
+    <h3>🗑️ 消す</h3>
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>くわしい画面で、右上のゴミ箱のマークをタップ</strong>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>確認の画面で「削除する」をタップ</strong>
+          <p>やめるときは「キャンセル」をタップします。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="shots">
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/08-detail.webp" width="540" height="1200" loading="lazy" alt="くわしい画面の右上に、えんぴつのマークとゴミ箱のマーク">
+          <span class="tap sm" style="left:82.5%;top:5.5%"></span>
+          <span class="tap sm" style="left:94%;top:5.5%;width:11%"></span>
+        </div></div>
+        <figcaption><b>右上のマーク</b>左が「直す」、右が「消す」</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/11-delete.webp" width="540" height="1200" loading="lazy" alt="削除の確認画面。キャンセルと削除するのボタン">
+          <span class="tap" style="left:74.5%;top:56.5%;width:22%;aspect-ratio:auto;height:6%;border-radius:999px"></span>
+        </div></div>
+        <figcaption><b>削除の確認</b>「削除する」で消えます</figcaption>
+      </figure>
+    </div>
+
+    <div class="warn-box">
+      <strong>⚠️ 消したものは元にもどせません</strong><br>
+      削除する前に、本当に消してよいか確かめてください。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       9. ToDo
+  ============================================================ -->
+  <section class="section" id="sec-todo">
+    <div class="section-header">
+      <div class="num">9</div>
+      <h2>ToDo（やること）</h2>
+    </div>
+
+    <p class="lead">病院の予約や書類の提出など、やることを書いておけます。期限の日時にスマホへ通知を出すこともできます。</p>
+
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>下の「To Do」をタップし、右下の「＋ 新しいToDo」をタップ</strong>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>「タイトル」にやることを書く</strong>
+          <p>「詳細メモ」には持ち物などを書いておけます（書かなくてもかまいません）。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>「期限日」と「時間」をえらぶ（任意）</strong>
+          <p>時間まで決めると、「通知」をオンにできます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>通知がほしいときは「通知」のスイッチをオン</strong>
+          <p>はじめてオンにしたとき、スマホから「通知を許可しますか？」と聞かれます。「許可」をえらんでください。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>「保存する」をタップ</strong>
+          <p>一覧は「期限切れ」「今日」「今後の予定」「完了済み」に分かれて並びます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>終わったら、左の四角をタップしてチェック</strong>
+          <p>「完了済み」に移ります。もう一度タップすると元にもどります。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="shots">
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/12-todo-list.webp" width="540" height="1200" loading="lazy" alt="ToDoの一覧画面。今後の予定と完了済みに分かれている">
+          <span class="tap sm" style="left:12.3%;top:18.3%"></span>
+          <span class="tap" style="left:78.8%;top:84.1%;width:34%;aspect-ratio:auto;height:7.5%;border-radius:999px"></span>
+        </div></div>
+        <figcaption><b>ToDoの一覧</b>左の四角で「完了」、右下で追加</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/13-todo-edit.webp" width="540" height="1200" loading="lazy" alt="ToDoの入力画面。タイトル、詳細メモ、期限日、時間、通知のスイッチ">
+          <span class="tap sm" style="left:86.3%;top:55%"></span>
+        </div></div>
+        <figcaption><b>ToDoの入力</b>「通知」をオンにするとお知らせ</figcaption>
+      </figure>
+    </div>
+
+    <div class="point-box">
+      <strong>🔔 通知のマーク</strong><br>
+      通知をオンにしたToDoには、一覧の右にベルのマークが付きます。スマホの省電力の設定によっては、通知が数分おくれることがあります。
+    </div>
+    <p style="font-size:16px;color:var(--text-sub);">ToDoを直すときは、一覧でタップします。消すときは、開いた画面の右上のゴミ箱マークをタップします。</p>
+  </section>
+
+  <!-- ============================================================
+       10. メモ
+  ============================================================ -->
+  <section class="section" id="sec-memo">
+    <div class="section-header">
+      <div class="num">10</div>
+      <h2>メモ</h2>
+    </div>
+
+    <h3>📝 メモを書く</h3>
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>下の「メモ」をタップし、右下の「＋ 新しいメモ」をタップ</strong>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>タイトルと本文を書く</strong>
+          <p>ラベルがあるときは、タイトルの下のラベルをタップして付けられます（いくつでも付けられます）。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>右上の ✓ マークをタップして保存</strong>
+        </div>
+      </li>
+    </ol>
+
+    <h3>🏷️ ラベルで分ける</h3>
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>メモの画面右上の、荷札のマークをタップ</strong>
+          <p>「ラベル管理」の画面が開きます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>右下の「＋」でラベルを作る</strong>
+          <p>例：「家族」「健康」「趣味」。えんぴつで名前の変更、ゴミ箱で削除ができます。ラベルを消しても、メモは消えません。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>一覧の上のラベルをタップすると、そのラベルのメモだけを表示</strong>
+          <p>上の検索欄では、タイトルと本文からさがせます。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="shots">
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/14-memo-list.webp" width="540" height="1200" loading="lazy" alt="メモの一覧画面。上に検索欄とラベルのボタン、右上に荷札のマーク">
+          <span class="tap sm" style="left:70.8%;top:5.5%"></span>
+          <span class="tap" style="left:57%;top:19.1%;width:48%;aspect-ratio:auto;height:5%;border-radius:999px"></span>
+        </div></div>
+        <figcaption><b>メモの一覧</b>上のラベルで絞りこみ</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/15-memo-edit.webp" width="540" height="1200" loading="lazy" alt="メモを書く画面。タイトルの下にラベル、右上に保存のマーク">
+          <span class="tap sm" style="left:50%;top:19.1%"></span>
+          <span class="tap sm" style="left:94%;top:5.5%;width:11%"></span>
+        </div></div>
+        <figcaption><b>メモを書く</b>ラベルをタップで付ける、✓で保存</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/16-labels.webp" width="540" height="1200" loading="lazy" alt="ラベル管理の画面。ラベルの一覧と、右下の追加ボタン">
+          <span class="tap sm" style="left:89%;top:92.8%"></span>
+        </div></div>
+        <figcaption><b>ラベル管理</b>右下の「＋」で作る</figcaption>
+      </figure>
+    </div>
+
+    <div class="warn-box">
+      <strong>⚠️ パスワードはメモに書かないでください</strong><br>
+      メモとToDoはスマホの中に保存されますが、パスワードのような特別な暗号化はしていません。パスワードや暗証番号は「パスワード」の画面に登録してください。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       11. セキュリティ
+  ============================================================ -->
+  <section class="section" id="sec-security">
+    <div class="section-header">
+      <div class="num">11</div>
+      <h2>安全のしくみ</h2>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🔢</div>
+        <h3>PINコードでロック</h3>
+        <p>6けたのPINコードを知らない人は、アプリを開けません。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">👆</div>
+        <h3>指紋・顔でロック解除</h3>
+        <p>スマホに指紋や顔を登録していれば、それでも開けます。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⏱️</div>
+        <h3>自動ロック</h3>
+        <p>ほかのアプリに切り替えて60秒たつと、自動でロックされます。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚫</div>
+        <h3>まちがい入力の制限</h3>
+        <p>PINコードを5回まちがえると、1分間入力できなくなります。さらにまちがえると、10分、15分…と待つ時間が長くなります。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔐</div>
+        <h3>パスワードは暗号化して保存</h3>
+        <p>パスワードは、スマホの安全な保管場所に暗号化して保存します。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <h3>コピーは30秒で消去</h3>
+        <p>コピーしたパスワードは、30秒後に自動で消えます。</p>
+      </div>
+    </div>
+
+    <div class="point-box" style="margin-top: 20px;">
+      <strong>🛡️ データはあなたのスマホの中だけ</strong><br>
+      登録したパスワード・ToDo・メモを、私たちのサーバーやクラウドへ送ることはありません。なお、無料でお使いの場合は広告を表示するために、広告の会社と通信します（くわしくは<a href="simpleps-privacypolicy.html">プライバシーポリシー</a>をご覧ください）。
+    </div>
+    <div class="warn-box">
+      <strong>⚠️ 機種変更の前に</strong><br>
+      データはスマホの中にだけあるため、スマホをなくしたり機種変更したりすると、データも一緒になくなります。プレミアムプランの<a href="#sec-csv">CSVで保存</a>を使って、控えを取っておくと安心です。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       12. 設定
+  ============================================================ -->
+  <section class="section" id="sec-settings">
+    <div class="section-header">
+      <div class="num">12</div>
+      <h2>設定</h2>
+    </div>
+
+    <p class="lead">画面右上の歯車のマークから、設定の画面を開きます。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>項目</th><th>できること</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>⭐ プレミアムプラン</td><td>プレミアムプランの申し込み・確認</td></tr>
+          <tr><td>⇅ CSV管理</td><td>パスワードをファイルに保存・ファイルから復元（プレミアムプラン）</td></tr>
+          <tr><td>🔢 PINコードを変更する</td><td>今のPINコードを入力してから、新しいPINコードを2回入力します</td></tr>
+          <tr><td>🎨 テーマ設定</td><td>画面の明るさを「ライトモード」「ダークモード」「システム設定に従う」からえらびます</td></tr>
+          <tr><td>🌐 言語</td><td>日本語・English・한국어・Español・Français・Deutsch から切り替えます</td></tr>
+          <tr><td>📄 利用規約 ほか</td><td>利用規約・プライバシーポリシー・特定商取引法に基づく表記を開きます</td></tr>
+          <tr><td>❓ 使い方</td><td>このページを開きます</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="shots">
+      <figure class="shot">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/17-settings.webp" width="540" height="923" loading="lazy" alt="設定画面。プレミアムプラン、CSV管理、PINコードの変更、テーマ設定、言語、利用規約などの項目">
+        </div></div>
+        <figcaption><b>設定の画面</b></figcaption>
+      </figure>
+      <figure class="shot dialog">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/19-language-setting.webp" width="540" height="818" loading="lazy" alt="言語をえらぶ画面。日本語、English、한국어、Español、Français、Deutsch">
+        </div></div>
+        <figcaption><b>言語の切り替え</b>えらんで右下のボタン</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       13. CSV
+  ============================================================ -->
+  <section class="section" id="sec-csv">
+    <div class="section-header">
+      <div class="num">13</div>
+      <h2>CSVで保存・復元 <span class="badge-premium">⭐ プレミアム</span></h2>
+    </div>
+
+    <p class="lead">登録したパスワードを、ファイル（CSV形式）に書き出して控えを取れます。機種変更のときは、新しいスマホでそのファイルを読みこむと元にもどせます。</p>
+
+    <ol class="steps">
+      <li>
+        <div>
+          <strong>設定の画面で「CSV管理」をタップ</strong>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>控えを取るときは「エクスポート」をタップ</strong>
+          <p>画面の案内にしたがって、保存先をえらびます。</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>元にもどすときは「インポート」をタップ</strong>
+          <p>書き出したファイルをえらび、読みこみ方（追加／上書き／全部入れかえ）をえらびます。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="shots">
+      <figure class="shot single">
+        <div class="frame"><div class="screen">
+          <img src="images/guide/18-csv.webp" width="540" height="1200" loading="lazy" alt="CSV管理の画面。エクスポートとインポートのボタン">
+          <span class="tap wide" style="left:50%;top:27.6%;width:62%"></span>
+          <span class="tap wide" style="left:50%;top:49.3%;width:62%"></span>
+        </div></div>
+        <figcaption><b>CSV管理</b>上が書き出し、下が読みこみ</figcaption>
+      </figure>
+    </div>
+
+    <div class="warn-box">
+      <strong>⚠️ 書き出したファイルの取りあつかいに注意</strong><br>
+      ファイルにはパスワードがそのまま書かれています。人に送ったり、だれでも見られる場所に置いたりしないでください。使い終わったら削除してください。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       14. プレミアムプラン
+  ============================================================ -->
+  <section class="section" id="sec-premium">
+    <div class="section-header">
+      <div class="num">14</div>
+      <h2>プレミアムプラン <span class="badge-premium">⭐ PREMIUM</span></h2>
+    </div>
+
+    <div class="price-box">
+      <div class="big">🎁 はじめの2週間は無料</div>
+      <div>その後 <strong>月額100円</strong>（自動更新）</div>
+      <div style="font-size: 15px; color: var(--text-sub); margin-top: 6px;">いつでも解約できます。解約しても、期間の終わりまではそのまま使えます。</div>
+    </div>
+
+    <h3>プレミアムプランでできること</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">📤</div>
+        <h3>CSVエクスポート</h3>
+        <p>パスワードをファイルに書き出して控えを取れます。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📥</div>
+        <h3>CSVインポート</h3>
+        <p>書き出したファイルから、パスワードを元にもどせます。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚫</div>
+        <h3>広告なし</h3>
+        <p>画面の下の広告が表示されなくなります。</p>
+      </div>
+    </div>
+
+    <h3>申し込み方</h3>
+    <ol class="steps">
+      <li><div><strong>設定の画面で「プレミアムプラン」をタップ</strong></div></li>
+      <li><div><strong>「2週間無料で始める」をタップ</strong><p>Google Play の画面が出るので、内容を確かめて手続きします。</p></div></li>
+    </ol>
+
+    <ul class="notes">
+      <li>お支払いは Google Play アカウントに請求されます。</li>
+      <li>無料期間が終わる24時間前までに解約しないと、自動で月額100円が請求されます。</li>
+      <li>解約は Google Play アプリの「お支払いと定期購入」→「定期購入」から行えます。アプリを削除しただけでは解約されません。</li>
+      <li>機種変更したときは、プレミアムプランの画面の「購入を復元する」をタップしてください。</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <nav>
+    <a href="index.html">ホーム</a>
+    <a href="simpleps-guide.html">使い方</a>
+    <a href="simpleps-userpolicy.html">利用規約</a>
+    <a href="simpleps-privacypolicy.html">プライバシーポリシー</a>
+    <a href="simpleps-legal.html">特商法表記</a>
+  </nav>
+  <p>&copy; 2026 パスワード管理帳 SimplePS. All rights reserved.</p>
+</footer>
+
 </body>
 </html>
